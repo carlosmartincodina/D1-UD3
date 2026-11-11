@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Emisora favorita</title>
+	</head>
+	<body>
+		<form th:action="@{/paso3}" method="POST" th:object="${quiz}">
+						
+			<h1>Selecciona tus emisoras de radio favoritos: </h1>
+			
+			<input type="checkbox" id="Megastar" value="Megastar" th:field="*{emisoraFavorita}">
+			<label for="Megastar">Megastar</label>
+			<br>
+			<br>	
+			<input type="checkbox" id="Los 40" value="Los 40" th:field="*{emisoraFavorita}">
+			<label for="Los 40">Los 40</label>
+			<br>
+			<br>
+			<input type="checkbox" id="Cadena 100" value="Cadena 100" th:field="*{emisoraFavorita}">
+			<label for="Cadena 100">Cadena 100</label>
+			<br>
+			<br>
+			<input type="checkbox" id="Radio Maria" value="Radio Maria" th:field="*{emisoraFavorita}">
+			<label for="Radio Maria">Radio Maria</label>
+			<br>
+			<br>
+			<input type="checkbox" id="Kiss FM" value="Kiss FM" th:field="*{emisoraFavorita}">
+			<label for="Kiss FM">Kiss FM</label>
+			<br>
+			<br>
+			<input type="checkbox" id="RNE" value="RNE" th:field="*{emisoraFavorita}">
+			<label for="RNE">RNE</label>
+			<br>
+			<br>
+			<input type="checkbox" id="Cadena SER" value="Cadena SER" th:field="*{emisoraFavorita}">
+			<label for="Cadena SER">Cadena SER</label>
+			<br>
+			<br>
+			<p th:if="${#fields.hasErrors('emisoraFavorita')}" th:errors="*{emisoraFavorita}"></p>
+			<button type="submit">Enviar</button>
+		</form>
+		
+		<form th:action="@{/}" method="POST" th:object="${quiz}">
+			<button type="submit">Volver</button>
+		</form>
+	</body>
+</html>
