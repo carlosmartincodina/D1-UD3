@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>¿AM o FM?</title>
+	</head>
+	<body>
+		<form th:action="@{/resultado}" method="POST" th:object="${quiz}">
+		
+			<h1>Selecciona el tipo de radio que escuchas habitualmente:</h1>
+			<input type="radio" id="AM" value="AM" th:field="*{AMoFM}">
+			<label for="AM">AM</label>
+
+			<input type="radio" id="FM" value="FM" th:field="*{AMoFM}">
+			<label for="FM">FM</label>
+			<br>
+			<p th:if="${#fields.hasErrors('AMoFM')}" th:errors="*{AMoFM}"></p>
+			<br>
+			<button type="submit">Siguiente</button>
+		</form>
+		<form th:action="@{/paso3}" method="POST" th:object="${quiz}">
+
+		    <button type="submit">Volver</button>
+		</form>
+	</body>
+</html>

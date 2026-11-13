@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.support.SessionStatus;
 
 @SpringBootApplication
 @Controller
@@ -25,10 +24,8 @@ public class Controlador {
 	}
 	
 	@GetMapping("/")
-	public String paso1(Model model, HttpSession session) {
-		Quiz quiz = new Quiz();
-		model.addAttribute("quiz", quiz);
-		session.setAttribute("nombre", quiz);
+	public String paso1(Model model) {
+		model.addAttribute("quiz", new Quiz());
 		return "paso1";
 	}
 	
@@ -38,7 +35,6 @@ public class Controlador {
 		//Comprueba las validaciones y si no es correcto vuelve a /paso1
 		// o si se accede directamente a /paso2 sin sesión, vuelve a /paso1 también
 		if (bindingResult.hasErrors()) return "paso1";
-		model.addAttribute("quiz", quiz);
 		return "paso2";
 	}
 	
@@ -46,7 +42,6 @@ public class Controlador {
 	public String paso3(@Validated({ValidarEmisoras.class}) @ModelAttribute Quiz quiz,
 			BindingResult bindingResult, Model model) {
 		//Añadimos al modelo el objeto quiz
-		model.addAttribute("quiz", quiz);
 		if (bindingResult.hasErrors()) return "paso2";
 		
 		return "paso3";
@@ -55,7 +50,6 @@ public class Controlador {
 	@PostMapping("/paso4")
 	public String paso4(@Validated({ValidarTema.class,ValidarEmisoras.class,ValidarTipoRadio.class}) @ModelAttribute Quiz quiz,
 			BindingResult bindingResult, Model model) {
-		model.addAttribute("quiz", quiz);
 		if (bindingResult.hasErrors()) return "paso3";
 		return "paso4";
 	}
@@ -63,7 +57,6 @@ public class Controlador {
 	@PostMapping("/resultado")
 	public String resultado(@Validated({ValidarTema.class,ValidarEmisoras.class,ValidarTipoRadio.class, ValidarAMoFM.class}) @ModelAttribute Quiz quiz,
 			BindingResult bindingResult, Model model) {
-		model.addAttribute("quiz", quiz);
 		if (bindingResult.hasErrors()) return "paso4";
 		ArrayList<String> datos = new ArrayList<>();
 		datos.add("Donde te gusta más escuchar la radio: "+quiz.getTipoRadio());
@@ -75,8 +68,8 @@ public class Controlador {
 	}
 	
 	@PostMapping("/reiniciar")
-	public String reiniciar(HttpSession session) {
-		session.invalidate();
+	public String reiniciar(@ModelAttribute Quiz quiz, SessionStatus status) {
+		status.setComplete();
 		return "redirect:/";
 	}
 
