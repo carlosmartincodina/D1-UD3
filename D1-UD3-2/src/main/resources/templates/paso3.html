@@ -1,0 +1,31 @@
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Tema favorito</title>
+	</head>
+	<body>
+		<form th:action="@{/paso4}" method="POST" th:object="${quiz}">
+			
+			<h1>Selecciona tu tema favorito</h1>
+			
+			<label for="tema">Elige un tema favorito:</label>
+			<br>
+			<select id="tema" name="tema" th:field="*{temaFavorito}">
+				<option th:value="${null}"></option>
+				<option id="Musica" value="Musica" th:field="*{temaFavorito}">Música</option>
+				<option id="Noticias" value="Noticias" th:field="*{temaFavorito}">Noticias</option>
+				<option id="Deportes" value="Deportes" th:field="*{temaFavorito}">Deportes</option>
+				<option id="Humor" value="Humor" th:field="*{temaFavorito}">Humor</option>
+				<option id="Entrevistas" value="Entrevistas" th:field="*{temaFavorito}">Entrevistas</option>
+			</select>
+			<br>
+			<p th:if="${#fields.hasErrors('temaFavorito')}" th:errors="*{temaFavorito}"></p>
+			<button type="submit">Enviar</button>
+		</form>
+		
+		<form th:action="@{/paso2}" method="POST" th:object="${quiz}">
+		    <button type="submit">Volver</button>
+		</form>
+	
+	</body>
+</html>

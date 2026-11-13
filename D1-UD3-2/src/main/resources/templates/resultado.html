@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Resultado quiz</title>
+	</head>
+	<body>
+		<form th:object="${quiz}">
+			<ol>
+			    <li th:each="etapa : ${datos}" th:text="${etapa}"></li>
+			</ol>
+		</form>
+		
+		<form th:action="@{/paso4}" method="POST" th:object="${quiz}">
+			
+		<button type="submit">Volver</button>
+		</form>
+
+		<form th:action="@{/reiniciar}" method="POST" th:object="${quiz}">
+			
+		<button type="submit">Volver a empezar de 0</button>
+		</form>
+	</body>
+</html>

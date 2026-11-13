@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Tipo de radio favorita</title>
+	</head>
+	<body>
+		<form th:action="@{/paso2}" method="POST" th:object="${quiz}">
+			
+			<h1>Selecciona el tipo de radio que escuchas habitualmente:</h1>
+			<input type="radio" id="Digital" value="Digital" th:field="*{tipoRadio}">
+			<label for="Digital">Digital</label>
+
+			<input type="radio" id="Analogico" value="Analogico" th:field="*{tipoRadio}">
+			<label for="Analogico">Analógico</label>
+			<br>
+			<p th:if="${#fields.hasErrors('tipoRadio')}" th:errors="*{tipoRadio}"></p>
+			<br>
+			<button type="submit">Siguiente</button>
+		</form>
+	</body>
+</html>

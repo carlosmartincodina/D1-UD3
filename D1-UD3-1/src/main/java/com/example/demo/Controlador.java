@@ -23,16 +23,18 @@ public class Controlador {
 	}
 	
 	@GetMapping("/")
-	public String paso1(Model model, HttpSession session) {
+	public String paso1(Model model) {
 		//Añadimos el objeto quiz al modelo
 		model.addAttribute("quiz", new Quiz());
+		//Devolvemos la plantilla
 		return "paso1";
 	}
 	
 	@PostMapping("/")
-	public String paso1Post(Model model, HttpSession session) {
-		//Añadimos el objeto quiz al modelo
+	public String paso1Post(Model model) {
+		//Añadimos el objeto quiz al modelo en el caso de que se haya ido para atrás
 		model.addAttribute("quiz", new Quiz());
+		//Devolvemos la plantilla
 		return "paso1";
 	}
 	
@@ -43,6 +45,7 @@ public class Controlador {
 		session.setAttribute("tipoRadio", quiz.getTipoRadio());
 		//Comprueba las validaciones de ValidarTipoRadio y si no es correcto vuelve a /paso1
 		if (bindingResult.hasErrors()) return "paso1";
+		//Devolvemos la plantilla
 		return "paso2";
 	}
 	
@@ -53,7 +56,7 @@ public class Controlador {
 		session.setAttribute("EmisoraFavorita", quiz.getEmisoraFavorita());
 		//Comprueba las validaciones de ValidarEmisoras y si no es correcto vuelve a /paso2
 		if (bindingResult.hasErrors()) return "paso2";
-		
+		//Devolvemos la plantilla
 		return "paso3";
 	}
 	
@@ -65,6 +68,7 @@ public class Controlador {
 		session.setAttribute("temaFavorito", quiz.getTemaFavorito());
 		//Comprueba las validaciones de ValidarTema y si no es correcto vuelve a /paso3
 		if (bindingResult.hasErrors()) return "paso3";
+		//Devolvemos la plantilla
 		return "paso4";
 	}
 	
@@ -75,21 +79,26 @@ public class Controlador {
 		//Aqui no hace falta añadir el String AMoFM ya que lo obtendrá paso4.
 		//Comprueba las validaciones de ValidarAMoFM y si no es correcto vuelve a /paso4
 		if (bindingResult.hasErrors()) return "paso4";
-		ArrayList<String> datos = new ArrayList<>();
 		// Hacemos emisorasFavoritas un String para que tenga un formato mas limpio, en vez de tener [].
+		@SuppressWarnings("unchecked") // Ignoramos la advertencia que nos da por el casteo
 		String emisorasFavoritasString = String.join(", ", (ArrayList<String>) session.getAttribute("EmisoraFavorita"));
-		
+		//Creamos la lista que se va a recorrer en la plantilla
+		ArrayList<String> datos = new ArrayList<>();
+		//Añadimos los datos
 		datos.add("Donde te gusta más escuchar la radio: "+(String) session.getAttribute("tipoRadio"));
 		datos.add("Emisoras favoritas: "+emisorasFavoritasString);
 		datos.add("Temas favoritos: "+(String) session.getAttribute("temaFavorito"));
 		datos.add("¿AM o FM?: "+quiz.getAMoFM());
 		model.addAttribute("datos",datos);
+		//Devolvemos la plantilla
 		return "resultado";
 	}
 	
 	@PostMapping("/reiniciar")
 	public String reiniciar(HttpSession session) {
+		//Invalidamos la sesion
 		session.invalidate();
+		//Redirigimos a la pantalla principal
 		return "redirect:/";
 	}
 
