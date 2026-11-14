@@ -31,6 +31,14 @@ public class Controlador {
 		return "paso1";
 	}
 	
+	@PostMapping("/")
+	public String paso1Post(Model model, Quiz quiz) {
+		//Creamos el objeto quiz y lo añadimos al modelo
+		model.addAttribute("quiz", quiz);
+		//Devolvemos la plantilla
+		return "paso1";
+	}
+	
 	@PostMapping("/paso2")
 	public String paso2(@Validated(ValidarTipoRadio.class) @ModelAttribute Quiz quiz, BindingResult bindingResult,
 			Model model) {
@@ -79,7 +87,7 @@ public class Controlador {
 	}
 	
 	@PostMapping("/reiniciar")
-	public String reiniciar(@ModelAttribute Quiz quiz, SessionStatus status) {
+	public String reiniciar(SessionStatus status) {
 		//Reiniciamos el proceso
 		status.setComplete();
 		//Redirigimos a la pantalla principal

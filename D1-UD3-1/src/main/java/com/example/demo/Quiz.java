@@ -8,8 +8,6 @@ import jakarta.validation.constraints.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-@Component
-@SessionScope
 public class Quiz {
 
 	@NotNull(message="No puedes dejar el campo vacío.", groups=ValidarTipoRadio.class)
